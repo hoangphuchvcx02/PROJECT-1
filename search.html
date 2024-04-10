@@ -13,6 +13,14 @@
     <body>
     <div class="container mt-3">
         <h1> MY ADMIN</h1>
+        <button id="ReloadBtn" type="button"> RELOAD </button>
+            <script>
+                // Lấy đối tượng nút reload
+                var reloadBtn = document.getElementById('ReloadBtn');
+                reloadBtn.addEventListener('click', function() {
+                    location.reload();
+                });
+            </script>
         <!-- _____search section _____________ -->
         <div class="input-group mb-3">
             <input id="SearchBar" type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
@@ -322,6 +330,8 @@
                 else if(catetory.value == 4)
                 SearchTableByExactValue("genField");
             }
+
+
 
           </script>
 

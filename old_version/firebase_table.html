@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="TE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title> READ, WRITE, UPDATE, DELETE DATA</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="">
+        <style> label{display: inline-block; width: 80px;}
+        input,select{width: 120px;}
+        </style>
+    </head>
+    <body>
+    <div class="container mt-3">
+        <table class="table table-dark text-white">
+            <thead>
+                <th> Sno </th>
+                <th>Name</th>
+                <th>Roll No</th>
+                <th> Section </th>
+                <th> Gender </th>
+            </thead>
+            <tbody id="tbody1">
+                <!-- <tr>
+                    <td> 1</td>
+                    <td>tacv</td>
+                    <td>10</td>
+                    <td>B</td>
+                    <td>male</td>
+                </tr> -->
+
+            </tbody>
+        </table>
+    </div>
+        <!--Firebase Libraries-->
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script> 
+<!-- ----------------CONFIGURATION------------------ -->
+        <script id="MainScript" >
+            // Import the functions you need from the SDKs you need
+             // Import the functions you need from the SDKs you need
+            //import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+            //import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-analytics.js";
+
+          var firebaseConfig = {
+            apiKey: "AIzaSyCFlniLOdN3oEY0gywKArliREPS8pXb6Us",
+            authDomain: "steady-copilot-392201.firebaseapp.com",
+            databaseURL: "https://steady-copilot-392201-default-rtdb.firebaseio.com",
+            projectId: "steady-copilot-392201",
+            storageBucket: "steady-copilot-392201.appspot.com",
+            messagingSenderId: "197186038852",
+            appId: "1:197186038852:web:dfce93e35d690ea9746011",
+           // measurementId: "G-9F45FXD305"
+        };
+            //const app = initializeApp(firebaseConfig);
+            //const analytics = getAnalytics(app);
+            firebase.initializeApp(firebaseConfig);
+            // Initialize Firebase
+       
+        //   ------------------  GET ALL DATA-----------------------
+
+            function SelectAllData(){
+                firebase.database().ref('StudentsList/').once('value',
+                function(AllRecords){
+                    AllRecords.forEach(
+                        function(CurrentRecord){
+                            var name = CurrentRecord.val().NameOfStd;
+                            var roll = CurrentRecord.val().RollNo;
+                            var sec = CurrentRecord.val().Section;
+                            var gen = CurrentRecord.val().Gender;
+                            AddItemsToTable(name,roll,sec,gen);
+                        }
+                    );
+                })
+            }
+            window.onload = SelectAllData();
+         
+
+//////////// FILLING THE TABLE ///////////
+            var stdNo = 0;
+            function AddItemsToTable(name,roll,sec,gen){
+                var tbody = document.getElementById('tbody1');
+                var trow = document.createElement('tr');
+                var td1 = document.createElement('td');
+                var td2 = document.createElement('td');
+                var td3 = document.createElement('td');
+                var td4 = document.createElement('td');
+                var td5 = document.createElement('td');
+                
+                td1.innerHTML= ++stdNo;
+                td2.innerHTML = name;
+                td3.innerHTML = roll;
+                td4.innerHTML = sec;
+                td5.innerHTML = gen;
+
+                trow.appendChild(td1); 
+                trow.appendChild(td2);
+                trow.appendChild(td3);
+                trow.appendChild(td4);
+                trow.appendChild(td5);
+                tbody.appendChild(trow);
+
+            }
+
+          </script>
+
+    </body>
+</html>

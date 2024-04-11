@@ -58,7 +58,7 @@
         <div class="modal-footer">
           <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
           <button id="AddModBtn" type="button" class="btn btn-primary" onclick="AddStd()">Add New Record</button>
-          <button id="UpdModBtn" type="button" class="btn btn-success" onclick="UpStd()">Update Record</button>
+          <button id="UpdModBtn" type="button" class="btn btn-success" onclick="UpdStd()">Update Record</button>
           <button id="DelModBtn" type="button" class="btn btn-danger" onclick="DelStd()">Delete Record</button>
         </div>
       </div>
@@ -73,31 +73,34 @@
             var stdNo = 0;
             var stdList = [];
 
-            var tbody = document.getElementById('tbody1');
+            let tbody = document.getElementById('tbody1');
+
             function AddItemToTable(name,roll,sec,gen){
+                //let tbody1 = document.getElementById('tbody1');
+                let tbody = document.getElementById('tbody1');
                 let trow = document.createElement("tr");
-                let td1 = document.createElement('td');
-                let td2 = document.createElement('td');
-                let td3 = document.createElement('td');
-                let td4 = document.createElement('td');
-                let td5 = document.createElement('td');
+                let td0 = document.createElement("td");
+                let td1 = document.createElement("td");
+                let td2 = document.createElement("td");
+                let td3 = document.createElement("td");
+                let td4 = document.createElement("td");
                 stdList.push([name, roll, gen, sec]);
 
-                td1.innerHTML = ++stdNo;
-                td2.innerHTML = name ;
-                td3.innerHTML = roll ;
-                td4.innerHTML = sec ;
-                td5.innerHTML = gen ;
+                td0.innerHTML = ++stdNo;
+                td1.innerHTML = name ;
+                td2.innerHTML = roll ;
+                td3.innerHTML = sec ;
+                td4.innerHTML = gen ;
 
+                trow.appendChild(td0);
                 trow.appendChild(td1);
                 trow.appendChild(td2);
                 trow.appendChild(td3);
                 trow.appendChild(td4);
-                trow.appendChild(td5);
 
                 var ControlDiv = document.createElement("div");
-                ControlDiv.innerHTML = '<button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> add new record</button>';
-                ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+stdNo+')"> edit record</button>';
+                ControlDiv.innerHTML = ' <button type="button" class="btn btn-primary my-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes(null)"> add new record</button>';
+                ControlDiv.innerHTML += '<button type="button" class="btn btn-primary my-2 ml-2" data-toggle="modal" data-target="#exampleModalCenter" onclick="FillTboxes('+stdNo+')"> edit record</button>';
 
                 trow.appendChild(ControlDiv);
                 tbody.appendChild(trow);
@@ -118,6 +121,9 @@
                     ModRoll.value = "";
                     ModSec.value = "";
                     ModGen.value = "";
+                    BTNmodAdd.style.display='inline-block';
+                    BTNmodUpd.style.display='none';
+                    BTNmodDel.style.display='none';
                 }
                 else{
                     --index;
@@ -125,9 +131,33 @@
                     ModRoll.value = stdList[index][1];
                     ModSec.value = stdList[index][2];
                     ModGen.value = stdList[index][3];
+                    ModRoll.disabled = true;
+                    BTNmodAdd.style.display='inline-block';
+                    BTNmodDel.style.display='inline-block';
+
                 }
             }
 
+            // function AddStd(){
+            //     firebase.database().ref("student/"+ModRoll.value).set(
+            //         {
+            //             NameOfStd: ModName.value,
+            //             RollNo: ModRoll.value,
+            //             Section: ModSec.value,
+            //             Gender: ModGen.vaule
+            //         },
+            //         (error)=>{
+            //             if(error){
+            //                 alert("record was not add");
+            //             }
+            //         }
+            //         else{
+            //             alert("record was add");
+            //             Select_Alldata();
+            //             $("exampleModalCenter").modal('hide');
+            //         }
+            //     }
+            // }
 
             function AddAllItemsToTable(TheStudent){
                 stdNo = 0;
